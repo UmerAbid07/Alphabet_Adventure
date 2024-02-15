@@ -8,11 +8,13 @@ public class Enemy : MonoBehaviour
     private StateMachine stateMachine;
     private GameObject player;
     private NavMeshAgent agent;
+    private Animator anim;
     public PathEnemy path;
     public Vector3 lastPos;
-    public GameObject debugShere;
+    //public GameObject debugShere;
     public GameObject Player { get=>player; }
     public NavMeshAgent Agent { get=>agent; }
+    public Animator Anim { get => anim; }
     [Header("Sight Values")]
     public float fieldOfView = 85f;
     public float eyeHieght;
@@ -29,6 +31,7 @@ public class Enemy : MonoBehaviour
         stateMachine=GetComponent<StateMachine>();
         agent=GetComponent<NavMeshAgent>();
         stateMachine.initialise();
+        anim=GetComponentInChildren<Animator>();
         player=GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -37,7 +40,7 @@ public class Enemy : MonoBehaviour
     {
         canSeePlayer();
         curentStateString=stateMachine.currentState.ToString();
-        debugShere.transform.position=lastPos;
+        //debugShere.transform.position=lastPos;
     }
     public bool canSeePlayer()
     {

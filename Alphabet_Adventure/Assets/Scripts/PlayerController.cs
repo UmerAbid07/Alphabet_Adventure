@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     float vertiaclInput;
     public float speed = 5.0f;
     public float jumpForce = 1.5f;
+    public float health = 100;
+    public float maxStamina = 100;
     CharacterController cc;
     float mouseX;
     float mouseY;
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
         mouseX=Input.GetAxis("Mouse X");
         mouseY=Input.GetAxis("Mouse Y");
         downvelocity += gravity * Time.deltaTime;
+        
     }
 
     private void FixedUpdate()
@@ -101,7 +104,8 @@ public class PlayerController : MonoBehaviour
         {
 
             timer -= Time.deltaTime;
-            print(timer);
+            maxStamina=timer*20f;
+            //print(timer);
             if (timer <= 0)
             {
                 isSprinting = false;
@@ -115,11 +119,19 @@ public class PlayerController : MonoBehaviour
         if(!isSprinting)
         {
             timer += Time.deltaTime;
+            maxStamina=timer*20f;
             if (timer >= 5)
             {
                 timer = 5;
             }
             //print(timer);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            health -= 10;
         }
     }
 

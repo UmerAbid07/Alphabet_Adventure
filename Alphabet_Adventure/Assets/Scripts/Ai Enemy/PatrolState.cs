@@ -14,6 +14,8 @@ public class PatrolState : BaseState
         if(enemy.canSeePlayer())
         {
             stateMachine.changeState(new AttackState());
+
+            enemy.Anim.SetTrigger("PlayerDetected");
         }
     }
     public override void exitState()
@@ -24,9 +26,11 @@ public class PatrolState : BaseState
     {
         if(enemy.Agent.remainingDistance<0.2f)
         {
+            enemy.Anim.SetFloat("C_Speed", 0);
             waitTime += Time.deltaTime;
             if (waitTime > 3)
             {
+                enemy.Anim.SetFloat("C_Speed", 1);
                 if (wayPointIndex < enemy.path.wayPoints.Count - 1)
                 {
                     wayPointIndex++;

@@ -15,6 +15,7 @@ public class SearchState : BaseState
     {
         if(enemy.canSeePlayer())
         {
+            enemy.Anim.SetBool("PlayerChase", false);
             stateMachine.changeState(new AttackState());
         }
         
@@ -24,6 +25,7 @@ public class SearchState : BaseState
             moveTimer += Time.deltaTime;
             if (searchTimer >10f)
             {
+                enemy.Anim.SetTrigger("BackToNormal");
                 stateMachine.changeState(new PatrolState());
             }
             if(moveTimer > 3)

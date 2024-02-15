@@ -27,7 +27,7 @@ public class Helath : MonoBehaviour
             if (heath <= 0)
             {
                 //diable player controller and show game over screen
-                Debug.Log("Game Over");
+                //Debug.Log("Game Over");
                 playerController.enabled = false;
             }
         }

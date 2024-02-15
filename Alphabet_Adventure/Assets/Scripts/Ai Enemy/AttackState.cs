@@ -37,6 +37,7 @@ public class AttackState : BaseState
             {
                 //in this it could be search state
                 stateMachine.changeState(new SearchState());
+                enemy.Anim.SetBool("PlayerChase", true);
             }
         }
     }
