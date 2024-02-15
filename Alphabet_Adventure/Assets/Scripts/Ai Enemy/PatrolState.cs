@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class PatrolState : BaseState
@@ -14,6 +11,10 @@ public class PatrolState : BaseState
     public override void performState()
     {
         patrolCycle();
+        if(enemy.canSeePlayer())
+        {
+            stateMachine.changeState(new AttackState());
+        }
     }
     public override void exitState()
     {
@@ -23,13 +24,18 @@ public class PatrolState : BaseState
     {
         if(enemy.Agent.remainingDistance<0.2f)
         {
-            if (wayPointIndex < enemy.path.wayPoints.Count - 1)
+            waitTime += Time.deltaTime;
+            if (waitTime > 3)
             {
-                wayPointIndex++;
-            }
-            else
-            {
-                wayPointIndex = 0;
+                if (wayPointIndex < enemy.path.wayPoints.Count - 1)
+                {
+                    wayPointIndex++;
+                }
+                else
+                {
+                    wayPointIndex = 0;
+                }
+                waitTime = 0;
             }
             enemy.Agent.SetDestination(enemy.path.wayPoints[wayPointIndex].position);
         }
